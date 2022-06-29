@@ -20,7 +20,7 @@ WiFiClient client;
 Adafruit_MQTT_Client mqtt(&client, AIO_SERVER, AIO_SERVERPORT, AIO_CID, AIO_USERNAME, AIO_KEY); 
  
 Adafruit_MQTT_Publish pub = Adafruit_MQTT_Publish(&mqtt, AIO_USERNAME "/test/1");
- 
+Adafruit_MQTT_Subscribe sub = Adafruit_MQTT_Subscribe(&mqtt, AIO_USERNAME "/test/1"); 
 #define OLED_RESET     -1 // Reset pin # (or -1 if sharing Arduino reset pin) 
  
 int sensorValue; 
@@ -56,7 +56,7 @@ void setup() {
     delay(500); 
     Serial.println("."); 
   } 
-   
+     mqtt.subscribe(&sub); 
 } 
  
 void loop() { 
@@ -64,6 +64,13 @@ void loop() {
   MQTT_connect();   
   delay(50); 
   sensorValue = 2 ;  
+  Adafruit_MQTT_Subscribe *subscription; 
+  while ((subscription = mqtt.readSubscription(5000))) { 
+      if (subscription == &sub) { 
+        Serial.print(F("Got onoff: ")); 
+        Serial.println((char *)sub.lastread); 
+      } 
+  } 
 
   Serial.println(sensorValue); 
   if (!pub.publish(sensorValue)) { 
