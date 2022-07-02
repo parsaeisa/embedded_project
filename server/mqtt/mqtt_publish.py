@@ -5,18 +5,14 @@ from paho.mqtt import client as mqtt_client
 
 topic = "97411252/result"
 
-def publish(client,msg):
-    msg_count = 0
-    while True:
-        time.sleep(1)        
-        result = client.publish(topic, msg)
-        # result: [0, 1]
-        status = result[0]
-        if status == 0:
-            print(f"Send `{msg}` to topic `{topic}`")
-        else:
-            print(f"Failed to send message to topic {topic}")
-        msg_count += 1
+def publish(client,msg):      
+    time.sleep(.5)        
+    result = client.publish(topic, msg)
+    status = result[0]
+    if status == 0:
+        print(f"Send `{msg}` to topic `{topic}`")
+    else:
+        print(f"Failed to send message to topic {topic}")
 
 
 def run():
