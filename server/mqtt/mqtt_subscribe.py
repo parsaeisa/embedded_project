@@ -1,14 +1,19 @@
 # python3.6
 import random
 import utils
+from decide import decide
+from mqtt_publish import publish
 
 from paho.mqtt import client as mqtt_client
 
-topic = "97411252/test/1"
+topic = "97411252/scan"
 
 def subscribe(client: mqtt_client):
     def on_message(client, userdata, msg):
-        print(f"Received `{msg.payload.decode()}` from `{msg.topic}` topic")
+        to_send = msg.payload[:-1]
+        print(f"Received `{to_send}`")
+        res = decide(to_send)        
+        publish(client, res)
 
     client.subscribe(topic)
     client.on_message = on_message
