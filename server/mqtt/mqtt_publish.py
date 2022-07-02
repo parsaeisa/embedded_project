@@ -3,13 +3,12 @@ import utils
 import time
 from paho.mqtt import client as mqtt_client
 
-topic = "97411252/test"
+topic = "97411252/result"
 
-def publish(client):
+def publish(client,msg):
     msg_count = 0
     while True:
-        time.sleep(1)
-        msg = f"messages: {msg_count}"
+        time.sleep(1)        
         result = client.publish(topic, msg)
         # result: [0, 1]
         status = result[0]
@@ -23,7 +22,7 @@ def publish(client):
 def run():
     client = utils.connect_mqtt()
     client.loop_start()
-    publish(client)
+    publish(client,"hello")
 
 
 if __name__ == '__main__':
