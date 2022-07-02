@@ -10,8 +10,9 @@ topic = "97411252/scan"
 
 def subscribe(client: mqtt_client):
     def on_message(client, userdata, msg):
-        print(f"Received `{msg.payload}`")
-        res = decide(msg.payload)        
+        to_send = msg.payload[:-1]
+        print(f"Received `{to_send}`")
+        res = decide(to_send)        
         publish(client, res)
 
     client.subscribe(topic)
