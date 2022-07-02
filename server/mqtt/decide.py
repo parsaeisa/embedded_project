@@ -1,0 +1,3 @@
+
+def decide(barcode):
+    pass
