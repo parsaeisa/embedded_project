@@ -4,11 +4,11 @@ import utils
 
 from paho.mqtt import client as mqtt_client
 
-topic = "97411252/test/1"
+topic = "97411252/scan"
 
 def subscribe(client: mqtt_client):
     def on_message(client, userdata, msg):
-        print(f"Received `{msg.payload.decode()}` from `{msg.topic}` topic")
+        print(f"Received `{msg.payload}`")
 
     client.subscribe(topic)
     client.on_message = on_message
